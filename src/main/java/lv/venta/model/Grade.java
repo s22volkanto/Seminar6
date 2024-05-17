@@ -38,4 +38,16 @@ public class Grade {
 	@JoinColumn(name = "Ids")//need to specify another class id column name
 	private Student student;
 	
+	@ManyToOne
+	@JoinColumn(name = "Idc")//need to specify another class id column name
+	private Course course;
+	
+	
+	public Grade(int grvalue, Student student, Course course) {
+		setGrvalue(grvalue);
+		setStudent(student);
+		setCourse(course);
+	}
+	
+	
 }
