@@ -5,8 +5,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -20,43 +23,29 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-@Table(name = "ProfessorTable")
+@Table(name = "CourseTable")
 @Entity
-public class Professor {
-	//variables
+public class Course {
 	@Setter(value = AccessLevel.NONE)
-	@Column(name = "Idp")
+	@Column(name = "Idc")
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long idp;
+	private long idc;
 	
 	@NotNull
-	@Pattern(regexp = "[A-Z]{1}[a-z]+")
-	@Size(min = 2, max = 10)
-	@Column(name = "Name")
-	private String name;
+	@Pattern(regexp = "[A-Za-z ]+")
+	@Size(min = 5, max = 20)
+	@Column(name = "Title")
+	private String title;
 	
-	@NotNull
-	@Pattern(regexp = "[A-Z]{1}[a-z]+")
-	@Size(min = 2, max = 20)
-	@Column(name = "Surname")
-	private String surname;
+	@Min(1)
+	@Max(20)
+	@Column(name = "Creditpoints")
+	private int creditpoints;
 	
-	@NotNull
-	@Column(name = "Degree")
-	private Degree degree;
-	
-	@OneToOne(mappedBy = "professor")//need to specify title of variable
-	@ToString.Exclude
-	private Course course;
+	@OneToOne
+	@JoinColumn(name = "Idp") //need to specify column name
+	private Professor professor;
 	
 	
-	public Professor(String name, String surname, Degree degree)
-	{
-		setName(name);
-		setSurname(surname);
-		setDegree(degree);
-	}
-	
-
 }
